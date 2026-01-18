@@ -18,11 +18,12 @@ public class Lime {
             System.out.println(horizontalLine);
 
             if (command.equals("list")) {
+                System.out.println("    Here are the tasks in your list:");
                 for (int i = 0; i < toDo.length; i++) {
                     if (toDo[i] == null) {
                         break;
                     }
-                    System.out.println("  " + (i + 1) + "." + toDo[i].toString());
+                    System.out.println("    " + (i + 1) + "." + toDo[i].toString());
                 }
             } else if (command.startsWith("mark")) {
                 int index = Integer.parseInt(command.split(" ")[1]) - 1;
@@ -37,9 +38,29 @@ public class Lime {
                 System.out.println("    OK, I've marked this task as not done yet:");
                 System.out.println("    " + toDo[index].toString());
             } else {
-            System.out.println("    " + "added: " + command);
-            toDo[count - 1] = new Task(command);
-            count++;
+                if (command.startsWith("todo")) {
+                    String description = command.substring(5);
+                    toDo[count - 1] = new Todo(description);
+                }
+                else if (command.startsWith("deadline")) {
+                    int byIndex = command.indexOf("/by");
+                    String description = command.substring(9, byIndex);
+                    String by = command.substring(byIndex + 4);
+                    toDo[count - 1] = new Deadline(description, by);
+                }
+                else if (command.startsWith("event")) {
+                    int fromIndex = command.indexOf("/from");
+                    int toIndex = command.indexOf("/to");
+                    String description = command.substring(6, fromIndex);
+                    String from = command.substring(fromIndex + 6, toIndex);
+                    String to = command.substring(toIndex + 4);
+                    toDo[count - 1] = new Event(description, from, to);
+                }
+
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("    " + toDo[count - 1].toString());
+                System.out.println("    Now you have " + count + " tasks in the list.");
+                count++;
             }
 
             System.out.println(horizontalLine);
