@@ -21,7 +21,6 @@ public class Lime {
                 if (command.equals("list")) {
                     System.out.println("    Here are the tasks in your list:");
                     for (int i = 0; i < toDo.size(); i++) {
-                        // ✅ [修改] 获取元素用 .get(i)
                         System.out.println("    " + (i + 1) + "." + toDo.get(i).toString());
                     }
                 } else if (command.startsWith("mark")) {
@@ -136,11 +135,11 @@ public class Lime {
                         if (fromIndex < 6) {
                             throw new LimeException("OOPS!!! Please insert a space after 'event'.");
                         }
-                        if (toIndex < fromIndex) {
-                            throw new LimeException("OOPS!!! Please ensure '/from' appears before '/to'.");
+                        if (toIndex < fromIndex + 6) {
+                            throw new LimeException("OOPS!!! The start time cannot be empty.");
                         }
-                        if (fromIndex + 6 >= command.length() || toIndex + 4 >= command.length()) {
-                            throw new LimeException("OOPS!!! The time fields cannot be empty.");
+                        if (toIndex + 4 >= command.length()){
+                            throw new LimeException("OOPS!!! The end time cannot be empty.");
                         }
                         String description = command.substring(6, fromIndex);
                         String from = command.substring(fromIndex + 6, toIndex);
