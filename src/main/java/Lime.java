@@ -102,7 +102,7 @@ public class Lime {
                         Task newTask = new Todo(description);
                         toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + newTask.toString());
+                        System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
 
                     } else if (command.startsWith("deadline")) {
@@ -124,7 +124,7 @@ public class Lime {
                         Task newTask = new Deadline(description, by);
                         toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + newTask.toString());
+                        System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
                     } else if (command.startsWith("event")) {
                         int fromIndex = command.indexOf("/from");
@@ -150,7 +150,7 @@ public class Lime {
                         Task newTask = new Event(description, from, to);
                         toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + newTask.toString());
+                        System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
                     } else {
                         throw new LimeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
