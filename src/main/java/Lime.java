@@ -130,7 +130,7 @@ public class Lime {
                         int fromIndex = command.indexOf("/from");
                         int toIndex = command.indexOf("/to");
                         if (fromIndex == -1 || toIndex == -1) {
-                            throw new LimeException("OOPS!!! Event must contain '/from' and '/to'.");
+                            throw new LimeException("OOPS!!! Event must contain both '/from' and '/to'.");
                         }
                         if (fromIndex < 6) {
                             throw new LimeException("OOPS!!! Please insert a space after 'event'.");
