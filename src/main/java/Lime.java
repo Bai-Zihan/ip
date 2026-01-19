@@ -1,12 +1,12 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Lime {
     public static void main(String[] args) {
         String name = "Lime";
         String horizontalLine = "   ____________________________________________________________";
         Scanner sc = new Scanner(System.in);
-        Task[] toDo = new Task[100];
-        int count = 1;
+        ArrayList<Task> toDo = new ArrayList<>();
 
         System.out.println(horizontalLine);
         System.out.println("    Hello! I'm " + name);
@@ -20,11 +20,9 @@ public class Lime {
             try {
                 if (command.equals("list")) {
                     System.out.println("    Here are the tasks in your list:");
-                    for (int i = 0; i < toDo.length; i++) {
-                        if (toDo[i] == null) {
-                            break;
-                        }
-                        System.out.println("    " + (i + 1) + "." + toDo[i].toString());
+                    for (int i = 0; i < toDo.size(); i++) {
+                        // ✅ [修改] 获取元素用 .get(i)
+                        System.out.println("    " + (i + 1) + "." + toDo.get(i).toString());
                     }
                 } else if (command.startsWith("mark")) {
                     String[] parts = command.split(" ");
@@ -34,13 +32,14 @@ public class Lime {
 
                     try {
                         int index = Integer.parseInt(parts[1]) - 1;
-                        if (index < 0 || index >= count - 1) {
+
+                        if (index < 0 || index >= toDo.size()) {
                             throw new LimeException("OOPS!!! Task number " + parts[1] + " does not exist.");
                         }
 
-                        toDo[index].markAsDone();
+                        toDo.get(index).markAsDone();
                         System.out.println("    Nice! I've marked this task as done:");
-                        System.out.println("    " + toDo[index].toString());
+                        System.out.println("    " + toDo.get(index).toString());
 
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
@@ -54,22 +53,41 @@ public class Lime {
 
                     try {
                         int index = Integer.parseInt(parts[1]) - 1;
-                        if (index < 0 || index >= count - 1) { // 注意这里是用 count-1 因为你的 count 是从 1 开始记的下个空位
+                        if (index < 0 || index >= toDo.size()) {
                             throw new LimeException("OOPS!!! Task number " + parts[1] + " does not exist.");
                         }
 
-                        toDo[index].markAsUndone();
+                        toDo.get(index).markAsUndone();
                         System.out.println("    OK, I've marked this task as not done yet:");
-                        System.out.println("    " + toDo[index].toString());
+                        System.out.println("    " + toDo.get(index).toString());
+
+                    } catch (NumberFormatException e) {
+                        throw new LimeException("OOPS!!! Please enter a valid number.");
+                    }
+                } else if (command.startsWith("delete")) {
+                    String[] parts = command.split(" ");
+                    if (parts.length < 2) {
+                        throw new LimeException("OOPS!!! Please specify which task to delete.");
+                    }
+
+                    try {
+                        int index = Integer.parseInt(parts[1]) - 1;
+                        if (index < 0 || index >= toDo.size()) {
+                            throw new LimeException("OOPS!!! Task number " + parts[1] + " does not exist.");
+                        }
+
+                        Task taskToDelete = toDo.get(index);
+
+                        toDo.remove(index);
+
+                        System.out.println("    Noted. I've removed this task:");
+                        System.out.println("    " + taskToDelete.toString());
+                        System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
 
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
                     }
                 } else {
-                    if (count > 100) {
-                        throw new LimeException("OOPS!!! The task list is full. I cannot store more tasks.");
-                    }
-
                     if (command.startsWith("todo")) {
                         if (command.length() <= 4) {
                             throw new LimeException("OOPS!!! The description of a todo cannot be empty.");
@@ -82,11 +100,12 @@ public class Lime {
                             throw new LimeException("OOPS!!! The description of a todo cannot be empty.");
                         }
 
-                        toDo[count - 1] = new Todo(description);
+                        Task newTask = new Todo(description);
+                        toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + toDo[count - 1].toString());
-                        System.out.println("    Now you have " + count + " tasks in the list.");
-                        count++;
+                        System.out.println("    " + newTask.toString());
+                        System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
+
                     } else if (command.startsWith("deadline")) {
                         int byIndex = command.indexOf("/by");
                         if (byIndex == -1) {
@@ -103,11 +122,11 @@ public class Lime {
                         if (description.isEmpty() || by.isEmpty()) {
                             throw new LimeException("OOPS!!! The description or time cannot be empty.");
                         }
-                        toDo[count - 1] = new Deadline(description, by);
+                        Task newTask = new Deadline(description, by);
+                        toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + toDo[count - 1].toString());
-                        System.out.println("    Now you have " + count + " tasks in the list.");
-                        count++;
+                        System.out.println("    " + newTask.toString());
+                        System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
                     } else if (command.startsWith("event")) {
                         int fromIndex = command.indexOf("/from");
                         int toIndex = command.indexOf("/to");
@@ -129,11 +148,11 @@ public class Lime {
                         if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
                             throw new LimeException("OOPS!!! The description or time cannot be empty.");
                         }
-                        toDo[count - 1] = new Event(description, from, to);
+                        Task newTask = new Event(description, from, to);
+                        toDo.add(newTask);
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + toDo[count - 1].toString());
-                        System.out.println("    Now you have " + count + " tasks in the list.");
-                        count++;
+                        System.out.println("    " + newTask.toString());
+                        System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
                     } else {
                         throw new LimeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                     }
