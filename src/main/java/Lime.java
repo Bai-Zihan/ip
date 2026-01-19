@@ -135,6 +135,9 @@ public class Lime {
                         if (fromIndex < 6) {
                             throw new LimeException("OOPS!!! Please insert a space after 'event'.");
                         }
+                        if (toIndex < fromIndex) {
+                            throw new LimeException("OOPS!!! Please ensure '/from' appears before '/to'.");
+                        }
                         if (toIndex < fromIndex + 6) {
                             throw new LimeException("OOPS!!! The start time cannot be empty.");
                         }
