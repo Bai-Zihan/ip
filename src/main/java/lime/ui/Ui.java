@@ -1,3 +1,6 @@
+package lime.ui;
+
+import lime.task.Task;
 import java.util.Scanner;
 
 public class Ui {

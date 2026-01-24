@@ -1,3 +1,9 @@
+package lime.storage;
+
+import lime.task.Task;
+import lime.task.Todo;
+import lime.task.Deadline;
+import lime.task.Event;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

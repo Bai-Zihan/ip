@@ -1,3 +1,11 @@
+package lime.parser;
+
+import lime.LimeException;
+import lime.command.*;
+import lime.task.Deadline;
+import lime.task.Event;
+import lime.task.Todo;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 

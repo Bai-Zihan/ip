@@ -1,3 +1,10 @@
+package lime;
+
+import lime.command.Command;
+import lime.parser.Parser;
+import lime.storage.Storage;
+import lime.task.TaskList;
+import lime.ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
