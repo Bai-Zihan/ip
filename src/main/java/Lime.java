@@ -1,8 +1,12 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Lime {
 
@@ -98,6 +102,47 @@ public class Lime {
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
                     }
+                } else if (command.startsWith("on ")) {
+                    // 1. 截取并清理日期字符串
+                    String dateString = command.substring(3).trim();
+
+                    if (dateString.isEmpty()) {
+                        System.out.println("    OOPS!!! Please provide a date (e.g., on 2019-10-15).");
+                    }
+
+                    try {
+                        // 2. 解析目标日期
+                        LocalDate targetDate = LocalDate.parse(dateString);
+
+                        System.out.println("    Here are the tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ":");
+
+                        int count = 0;
+                        for (Task task : toDo) {
+                            if (task instanceof Deadline) {
+                                // 3. 检查 Deadline: 截止日期是否正好是这一天
+                                Deadline d = (Deadline) task;
+                                if (d.getBy().equals(targetDate)) {
+                                    System.out.println("    " + task);
+                                    count++;
+                                }
+                            } else if (task instanceof Event) {
+                                // 4. 检查 Event: 这一天是否在活动范围内 (包含开始和结束当天)
+                                Event e = (Event) task;
+                                // 逻辑：目标日期 >= 开始日期 并且 目标日期 <= 结束日期
+                                if (!targetDate.isBefore(e.getFrom()) && !targetDate.isAfter(e.getTo())) {
+                                    System.out.println("    " + task);
+                                    count++;
+                                }
+                            }
+                        }
+
+                        if (count == 0) {
+                            System.out.println("    No tasks found on this date.");
+                        }
+
+                    } catch (DateTimeParseException e) {
+                        System.out.println("    OOPS!!! Invalid date format. Please use yyyy-mm-dd (e.g., on 2019-10-15).");
+                    }
                 } else {
                     if (command.startsWith("todo")) {
                         if (command.length() <= 4) {
@@ -130,7 +175,7 @@ public class Lime {
                             throw new LimeException("OOPS!!! The time of a deadline cannot be empty.");
                         }
                         String description = command.substring(9, byIndex);
-                        String by = command.substring(byIndex + 4);
+                        String by = command.substring(byIndex + 4).trim();
                         if (description.isEmpty() || by.isEmpty()) {
                             throw new LimeException("OOPS!!! The description or time cannot be empty.");
                         }
@@ -159,8 +204,8 @@ public class Lime {
                             throw new LimeException("OOPS!!! The end time cannot be empty.");
                         }
                         String description = command.substring(6, fromIndex);
-                        String from = command.substring(fromIndex + 6, toIndex);
-                        String to = command.substring(toIndex + 4);
+                        String from = command.substring(fromIndex + 6, toIndex).trim();
+                        String to = command.substring(toIndex + 4).trim();
                         if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
                             throw new LimeException("OOPS!!! The description or time cannot be empty.");
                         }
@@ -177,7 +222,11 @@ public class Lime {
                 if (isChanged) {
                     saveTasks(toDo);
                 }
-            } catch (Exception e){
+            }
+            catch (DateTimeParseException e) {
+                System.out.println("    OOPS!!! Invalid date format. Please use yyyy-mm-dd (e.g., 2019-10-15).");
+            }
+            catch (Exception e){
                 System.out.println("    " + e.getMessage());
             }
 
