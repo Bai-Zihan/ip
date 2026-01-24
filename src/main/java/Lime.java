@@ -1,12 +1,18 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Lime {
+
+    private static final String FILE_PATH = "./data/lime.txt";
+
     public static void main(String[] args) {
         String name = "Lime";
         String horizontalLine = "   ____________________________________________________________";
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> toDo = new ArrayList<>();
+        ArrayList<Task> toDo = loadTasks();
 
         System.out.println(horizontalLine);
         System.out.println("    Hello! I'm " + name);
@@ -18,6 +24,9 @@ public class Lime {
             System.out.println(horizontalLine);
 
             try {
+
+                boolean isChanged = false;
+
                 if (command.equals("list")) {
                     System.out.println("    Here are the tasks in your list:");
                     for (int i = 0; i < toDo.size(); i++) {
@@ -39,6 +48,7 @@ public class Lime {
                         toDo.get(index).markAsDone();
                         System.out.println("    Nice! I've marked this task as done:");
                         System.out.println("    " + toDo.get(index).toString());
+                        isChanged = true;
 
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
@@ -59,6 +69,7 @@ public class Lime {
                         toDo.get(index).markAsUndone();
                         System.out.println("    OK, I've marked this task as not done yet:");
                         System.out.println("    " + toDo.get(index).toString());
+                        isChanged = true;
 
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
@@ -82,6 +93,7 @@ public class Lime {
                         System.out.println("    Noted. I've removed this task:");
                         System.out.println("    " + taskToDelete.toString());
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
+                        isChanged = true;
 
                     } catch (NumberFormatException e) {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
@@ -104,6 +116,7 @@ public class Lime {
                         System.out.println("    Got it. I've added this task:");
                         System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
+                        isChanged = true;
 
                     } else if (command.startsWith("deadline")) {
                         int byIndex = command.indexOf("/by");
@@ -126,6 +139,7 @@ public class Lime {
                         System.out.println("    Got it. I've added this task:");
                         System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
+                        isChanged = true;
                     } else if (command.startsWith("event")) {
                         int fromIndex = command.indexOf("/from");
                         int toIndex = command.indexOf("/to");
@@ -155,11 +169,15 @@ public class Lime {
                         System.out.println("    Got it. I've added this task:");
                         System.out.println("    " + newTask);
                         System.out.println("    Now you have " + toDo.size() + " tasks in the list.");
+                        isChanged = true;
                     } else {
                         throw new LimeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                     }
                 }
-            } catch (LimeException e){
+                if (isChanged) {
+                    saveTasks(toDo);
+                }
+            } catch (Exception e){
                 System.out.println("    " + e.getMessage());
             }
 
@@ -170,5 +188,57 @@ public class Lime {
         System.out.println(horizontalLine);
         System.out.println("    Bye. Hope to see you again soon!");
         System.out.println(horizontalLine);
+    }
+
+    private static void saveTasks(ArrayList<Task> tasks) throws IOException {
+        File file = new File(FILE_PATH);
+        file.getParentFile().mkdirs();
+
+        FileWriter fw = new FileWriter(file);
+        for (Task task : tasks) {
+            fw.write(task.toFileString() + System.lineSeparator());
+        }
+        fw.close();
+    }
+
+    private static ArrayList<Task> loadTasks() {
+        ArrayList<Task> loadedTasks = new ArrayList<>();
+        File file = new File(FILE_PATH);
+
+        if (!file.exists()) {
+            return loadedTasks;
+        }
+
+        try {
+            Scanner fileSc = new Scanner(file);
+            while (fileSc.hasNext()) {
+                String line = fileSc.nextLine();
+                String[] parts = line.split(" \\| ");
+
+                Task task = null;
+                switch (parts[0]) {
+                    case "T":
+                        task = new Todo(parts[2]);
+                        break;
+                    case "D":
+                        task = new Deadline(parts[2], parts[3]);
+                        break;
+                    case "E":
+                        task = new Event(parts[2], parts[3], parts[4]);
+                        break;
+                }
+
+                if (task != null) {
+                    if (parts[1].equals("1")) {
+                        task.markAsDone();
+                    }
+                    loadedTasks.add(task);
+                }
+            }
+            fileSc.close();
+        } catch (IOException e) {
+            System.out.println("    Error loading file: " + e.getMessage());
+        }
+        return loadedTasks;
     }
 }
