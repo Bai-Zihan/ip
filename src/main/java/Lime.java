@@ -103,7 +103,6 @@ public class Lime {
                         throw new LimeException("OOPS!!! Please enter a valid number.");
                     }
                 } else if (command.startsWith("on ")) {
-                    // 1. 截取并清理日期字符串
                     String dateString = command.substring(3).trim();
 
                     if (dateString.isEmpty()) {
@@ -111,7 +110,6 @@ public class Lime {
                     }
 
                     try {
-                        // 2. 解析目标日期
                         LocalDate targetDate = LocalDate.parse(dateString);
 
                         System.out.println("    Here are the tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ":");
@@ -119,16 +117,13 @@ public class Lime {
                         int count = 0;
                         for (Task task : toDo) {
                             if (task instanceof Deadline) {
-                                // 3. 检查 Deadline: 截止日期是否正好是这一天
                                 Deadline d = (Deadline) task;
                                 if (d.getBy().equals(targetDate)) {
                                     System.out.println("    " + task);
                                     count++;
                                 }
                             } else if (task instanceof Event) {
-                                // 4. 检查 Event: 这一天是否在活动范围内 (包含开始和结束当天)
                                 Event e = (Event) task;
-                                // 逻辑：目标日期 >= 开始日期 并且 目标日期 <= 结束日期
                                 if (!targetDate.isBefore(e.getFrom()) && !targetDate.isAfter(e.getTo())) {
                                     System.out.println("    " + task);
                                     count++;
