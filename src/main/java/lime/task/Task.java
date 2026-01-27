@@ -2,7 +2,7 @@ package lime.task;
 
 //Task as whole
 public class Task {
-    private String description;
+    private final String description;
     private boolean isDone;
 
     public Task(String description) {
@@ -15,7 +15,7 @@ public class Task {
         return this.description;
     }
 
-    //Gets if the task is done
+    //Gets the marking icon to show if the task is done
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }

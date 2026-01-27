@@ -6,7 +6,7 @@ import java.util.Locale;
 
 //Deadline Task
 public class Deadline extends Task{
-    private LocalDate by;
+    private final LocalDate by;
 
     public Deadline(String description, String by) {
         super(description);

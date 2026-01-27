@@ -11,9 +11,9 @@ import java.time.format.DateTimeParseException;
 //The Chatbot class
 public class Lime {
 
-    private Storage storage;
+    private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
 
     public Lime(String filePath) {
         ui = new Ui();
@@ -40,8 +40,6 @@ public class Lime {
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
 
-            } catch (LimeException e) {
-                ui.showError(e.getMessage());
             } catch (DateTimeParseException e) {
                 ui.showError("OOPS!!! Invalid date format. Please use yyyy-mm-dd.");
             } catch (IOException e) {

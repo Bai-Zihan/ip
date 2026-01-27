@@ -5,10 +5,9 @@ import lime.storage.Storage;
 import lime.task.Task;
 import lime.task.TaskList;
 import lime.ui.Ui;
-import java.io.IOException;
 
 public class DeleteCommand extends Command {
-    private int index;
+    private final int index;
 
     public DeleteCommand(int index) {
         this.index = index;

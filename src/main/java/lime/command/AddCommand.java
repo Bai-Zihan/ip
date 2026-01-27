@@ -1,14 +1,12 @@
 package lime.command;
 
-import lime.LimeException;
 import lime.storage.Storage;
 import lime.task.Task;
 import lime.task.TaskList;
 import lime.ui.Ui;
-import java.io.IOException;
 
 public class AddCommand extends Command {
-    private Task taskToAdd;
+    private final Task taskToAdd;
 
     public AddCommand(Task task) {
         this.taskToAdd = task;

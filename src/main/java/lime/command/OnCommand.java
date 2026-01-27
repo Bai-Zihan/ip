@@ -1,11 +1,9 @@
 package lime.command;
 
-import lime.LimeException;
 import lime.storage.Storage;
 import lime.task.Task;
 import lime.task.TaskList;
 import lime.ui.Ui;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -13,7 +11,7 @@ import lime.task.Deadline;
 import lime.task.Event;
 
 public class OnCommand extends Command {
-    private LocalDate targetDate;
+    private final LocalDate targetDate;
 
     public OnCommand(LocalDate date) {
         this.targetDate = date;
@@ -30,8 +28,7 @@ public class OnCommand extends Command {
                     System.out.println("    " + task);
                     count++;
                 }
-            } else if (task instanceof Event) {
-                Event e = (Event) task;
+            } else if (task instanceof Event e) {
                 if (!targetDate.isBefore(e.getFrom()) && !targetDate.isAfter(e.getTo())) {
                     System.out.println("    " + task);
                     count++;

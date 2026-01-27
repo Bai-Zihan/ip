@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //Maintains list of tasks
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -37,5 +37,15 @@ public class TaskList {
     //Extract the list of tasks as whole
     public ArrayList<Task> getAllTasks() {
         return tasks;
+    }
+
+    public ArrayList<Task> findTasks(String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                foundTasks.add(task);
+            }
+        }
+        return foundTasks;
     }
 }

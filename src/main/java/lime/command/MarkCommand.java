@@ -2,13 +2,11 @@ package lime.command;
 
 import lime.LimeException;
 import lime.storage.Storage;
-import lime.task.Task;
 import lime.task.TaskList;
 import lime.ui.Ui;
-import java.io.IOException;
 
 public class MarkCommand extends Command {
-    private int index;
+    private final int index;
 
     public MarkCommand(int index) {
         this.index = index;
