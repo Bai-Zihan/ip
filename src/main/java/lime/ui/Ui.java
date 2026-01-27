@@ -1,10 +1,12 @@
 package lime.ui;
 
 import lime.task.Task;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private Scanner sc;
+    private final Scanner sc;
     private static final String HORIZONTAL_LINE = "    ____________________________________________________________";
 
     public Ui() {
@@ -49,5 +51,20 @@ public class Ui {
         System.out.println("    Noted. I've removed this task:");
         System.out.println("    " + task);
         System.out.println("    Now you have " + size + " tasks in the list.");
+    }
+
+    public void showFoundTasks(ArrayList<Task> foundTasks) {
+        if (foundTasks.isEmpty()) {
+            System.out.println(HORIZONTAL_LINE);
+            System.out.println("    No matching tasks found.");
+            System.out.println(HORIZONTAL_LINE);
+        } else {
+            System.out.println(HORIZONTAL_LINE);
+            System.out.println("    Here are the matching tasks in your list:");
+            for (int i = 0; i < foundTasks.size(); i++) {
+                System.out.println(" " + (i + 1) + "." + foundTasks.get(i));
+            }
+            System.out.println(HORIZONTAL_LINE);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package lime.task;
 
 public class Task {
-    private String description;
+    private final String description;
     private boolean isDone;
 
     public Task(String description) {
@@ -11,10 +11,6 @@ public class Task {
 
     public String getDescription() {
         return this.description;
-    }
-
-    public boolean isDone() {
-        return this.isDone;
     }
 
     public String getStatusIcon() {

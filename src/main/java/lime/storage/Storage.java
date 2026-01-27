@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    private String filePath;
+    private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -30,18 +30,12 @@ public class Storage {
             String line = fileSc.nextLine();
             String[] parts = line.split(" \\| ");
 
-            Task task = null;
-            switch (parts[0]) {
-                case "T":
-                    task = new Todo(parts[2]);
-                    break;
-                case "D":
-                    task = new Deadline(parts[2], parts[3]);
-                    break;
-                case "E":
-                    task = new Event(parts[2], parts[3], parts[4]);
-                    break;
-            }
+            Task task = switch (parts[0]) {
+                case "T" -> new Todo(parts[2]);
+                case "D" -> new Deadline(parts[2], parts[3]);
+                case "E" -> new Event(parts[2], parts[3], parts[4]);
+                default -> null;
+            };
 
             if (task != null) {
                 if (parts[1].equals("1")) {
