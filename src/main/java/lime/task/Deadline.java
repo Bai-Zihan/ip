@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+//Deadline Task
 public class Deadline extends Task{
     private LocalDate by;
 
@@ -12,6 +13,7 @@ public class Deadline extends Task{
         this.by = LocalDate.parse(by);
     }
 
+    //Gets the deadline time
     public LocalDate getBy() {
         return this.by;
     }

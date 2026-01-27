@@ -8,6 +8,7 @@ import lime.ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+//The Chatbot class
 public class Lime {
 
     private Storage storage;
@@ -25,6 +26,7 @@ public class Lime {
         }
     }
 
+    //Operates the Chatbot
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -52,6 +54,7 @@ public class Lime {
         }
     }
 
+    //Specifies the hard drive address and runs the Chatbot
     public static void main(String[] args) {
         new Lime("./data/lime.txt").run();
     }

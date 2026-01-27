@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Handles tasks savings/loadings
 public class Storage {
     private String filePath;
 
@@ -17,6 +18,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    //loads the tasks from the hard drive to the task list
     public ArrayList<Task> load() throws IOException {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         File file = new File(filePath);
@@ -54,6 +56,7 @@ public class Storage {
         return loadedTasks;
     }
 
+    //Saves the current list of tasks to the hard drive
     public void save(ArrayList<Task> tasks) throws IOException {
         File file = new File(filePath);
         file.getParentFile().mkdirs();

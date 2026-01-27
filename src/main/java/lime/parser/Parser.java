@@ -9,8 +9,11 @@ import lime.task.Todo;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+
+//Decodes the user commands
 public class Parser {
 
+    //Chooses the correct command to execute or throws an exception for invalid commands
     public static Command parse(String fullCommand) throws LimeException {
         String commandWord = fullCommand.split(" ")[0];
 
@@ -147,6 +150,7 @@ public class Parser {
         throw new LimeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
     }
 
+    //Locates the task to execute for some index specific commands
     private static int parseIndex(String command) throws LimeException {
         String[] parts = command.split(" ");
         if (parts.length < 2) {

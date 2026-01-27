@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+//The Event Task
 public class Event extends Task{
     private LocalDate from;
     private LocalDate to;
@@ -13,10 +14,13 @@ public class Event extends Task{
         this.from = LocalDate.parse(from);
         this.to = LocalDate.parse(to);
     }
+
+    //Gets the start time of the event
     public LocalDate getFrom() {
         return this.from;
     }
 
+    //Gets the end time of the event
     public LocalDate getTo() {
         return this.to;
     }
