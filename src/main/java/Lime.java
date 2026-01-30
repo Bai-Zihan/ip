@@ -12,6 +12,7 @@ public class Lime {
 
     private static final String FILE_PATH = "./data/lime.txt";
 
+    // Entry point of the application
     public static void main(String[] args) {
         String name = "Lime";
         String horizontalLine = "   ____________________________________________________________";
