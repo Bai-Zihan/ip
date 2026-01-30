@@ -116,6 +116,7 @@ public class Parser {
         if (fullCommand.startsWith("on ")) {
             String dateString = fullCommand.substring(3).trim();
             if (dateString.isEmpty()) throw new LimeException("OOPS!!! Please provide a date.");
+
             try {
                 return new OnCommand(LocalDate.parse(dateString));
             } catch (DateTimeParseException e) {
