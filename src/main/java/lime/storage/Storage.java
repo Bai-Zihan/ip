@@ -28,6 +28,7 @@ public class Storage {
         }
 
         Scanner fileSc = new Scanner(file);
+
         while (fileSc.hasNext()) {
             String line = fileSc.nextLine();
             String[] parts = line.split(" \\| ");
