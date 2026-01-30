@@ -32,6 +32,7 @@ public class Event extends Task{
 
     @Override
     public String toString() {
+
         return "[E]" + super.toString() + " (from: " +
                 from.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) +
                 " to: " +
