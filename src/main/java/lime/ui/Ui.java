@@ -70,9 +70,11 @@ public class Ui {
         } else {
             System.out.println(HORIZONTAL_LINE);
             System.out.println("    Here are the matching tasks in your list:");
+
             for (int i = 0; i < foundTasks.size(); i++) {
                 System.out.println(" " + (i + 1) + "." + foundTasks.get(i));
             }
+
             System.out.println(HORIZONTAL_LINE);
         }
     }
