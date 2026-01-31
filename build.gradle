@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 repositories {
@@ -11,6 +13,8 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    implementation 'org.openjfx:javafx-controls:17.0.7'
+    implementation 'org.openjfx:javafx-fxml:17.0.7'
 }
 
 test {
@@ -28,7 +32,12 @@ test {
 }
 
 application {
-    mainClass.set("lime.Lime")
+    mainClass.set("lime.Launcher")
+}
+
+javafx {
+    version = "17.0.7"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 shadowJar {

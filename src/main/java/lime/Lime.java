@@ -7,6 +7,8 @@ import lime.task.TaskList;
 import lime.ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 //The Chatbot class
 public class Lime {
@@ -50,6 +52,26 @@ public class Lime {
                 ui.showLine();
             }
         }
+    }
+
+    //Generate a response for the user's chat message.
+    public String getResponse(String input) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream previousConsole = System.out;
+        System.setOut(new PrintStream(baos));
+
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, ui, storage);
+        } catch (LimeException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.setOut(previousConsole);
+        }
+
+        return baos.toString();
     }
 
     //Specifies the hard drive address and runs the Chatbot
