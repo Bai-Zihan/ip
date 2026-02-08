@@ -1,6 +1,7 @@
 package lime.task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 //Maintains list of tasks
 public class TaskList {
@@ -42,13 +43,8 @@ public class TaskList {
     }
 
     public ArrayList<Task> findTasks(String keyword) {
-        ArrayList<Task> foundTasks = new ArrayList<>();
-
-        for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)) {
-                foundTasks.add(task);
-            }
-        }
-        return foundTasks;
+        return tasks.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
