@@ -34,6 +34,7 @@ public class Parser {
             case "event" -> prepareEvent(fullCommand);
             case "find" -> prepareFind(fullCommand);
             case "on" -> prepareOn(fullCommand);
+            case "sort" -> new SortCommand();
             default -> throw new LimeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
         };
     }

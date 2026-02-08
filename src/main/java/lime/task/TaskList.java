@@ -3,6 +3,9 @@ package lime.task;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 //Maintains list of tasks
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -37,7 +40,7 @@ public class TaskList {
         return tasks.size();
     }
 
-    //Extract the list of tasks as whole
+    //Extracts the list of tasks as whole
     public ArrayList<Task> getAllTasks() {
         return tasks;
     }
@@ -46,5 +49,10 @@ public class TaskList {
         return tasks.stream()
                 .filter(task -> task.getDescription().contains(keyword))
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    //Sorts the tasks
+    public void sortTasks() {
+        tasks.sort(Comparator.comparing(Task::toString));
     }
 }

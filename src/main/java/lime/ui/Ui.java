@@ -78,4 +78,11 @@ public class Ui {
             System.out.println(HORIZONTAL_LINE);
         }
     }
+
+    //Prints response for a successful task sorting
+    public void showSortedMessage() {
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("    Got it! I've sorted your tasks alphabetically.");
+        System.out.println(HORIZONTAL_LINE);
+    }
 }
