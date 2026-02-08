@@ -20,6 +20,7 @@ public class Storage {
 
     //loads the tasks from the hard drive to the task list
     public ArrayList<Task> load() throws IOException {
+        assert filePath != null : "File path should not be null during load";
         ArrayList<Task> loadedTasks = new ArrayList<>();
         File file = new File(filePath);
 
