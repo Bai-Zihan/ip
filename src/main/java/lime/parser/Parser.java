@@ -162,6 +162,8 @@ public class Parser {
             throw new LimeException("OOPS!!! Deadline must contain '/by'.");
         }
 
+        assert byIndex >= 0 : "byIndex should be a non-negative integer.";
+
         if (byIndex < 9) {
             if (fullCommand.length() > 8 && fullCommand.charAt(8) != ' ') {
                 throw new LimeException("OOPS!!! Please insert a space after 'deadline'.");

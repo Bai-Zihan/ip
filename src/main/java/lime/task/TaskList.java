@@ -21,11 +21,13 @@ public class TaskList {
 
     //Remove a task form the list
     public void delete(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for deletion";
         tasks.remove(index);
     }
 
     //Extracts a task from the list with respect to its index in the list
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for access";
         return tasks.get(index);
     }
 
