@@ -3,26 +3,39 @@
 
 Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more productivity out of your day by recording and tracking your tasks.
 
+---
+
+## 🎨 UI Preview
+![Lime UI Preview](ui.png)
+
+---
+
 ### Here are what 🤖Lime🍋 stands out:
 
 - Easy commands
 - Clear user interface
 - No monetary cost
 
-### What you need to do to deploy:
+---
 
-1. Download from [here](https://github.com/[Bai-Zihan/ip](https://github.com/Bai-Zihan/ip))
+### 🚀 Deployment
+
+1. Download from [here](https://github.com/Bai-Zihan/ip)
 2.  Run the code
 3. Give your work to **Lime!**
 
-### Features
+---
+
+### ✔ Features
 - [x] Add tasks
 - [ ] Delete tasks
 - [ ] Find tasks
 - [ ] Mark tasks
 - [ ] Sort tasks
 
-### Guide
+---
+
+### 📖 Command Guide
 
 ### 1. Add Tasks with a Zest
 * **Todo**: `todo [description]` - Adds a task to the pulp.
@@ -42,7 +55,9 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 * **UnMark**: `unmark [index]` -Marks a task as undone.
 * **Delete**: `delete [index]` - Removes a task from the pulp-free list.
 
-Code Example
+---
+
+### 💻 Code Example
 Here is a snippet of the `main` method:
 ```java
 public static void main(String[] args) {
