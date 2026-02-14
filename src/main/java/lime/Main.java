@@ -50,7 +50,7 @@ public class Main extends Application {
         registerHandlers();
 
         // Initial welcome message
-        String welcomeMessage = "Hello! I'm Lime\nWhat can I do for you?";
+        String welcomeMessage = "Refreshing to see you!\nI'm Lime. What's on the menu today?";
         dialogContainer.getChildren().add(
                 DialogBox.getLimeDialog(welcomeMessage, limeImage)
         );

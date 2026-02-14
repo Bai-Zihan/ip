@@ -33,8 +33,8 @@ public class Ui {
      */
     public void showWelcome() {
         showLine();
-        System.out.println("    Hello! I'm Lime");
-        System.out.println("    What can I do for you?");
+        System.out.println("\"    Refreshing to see you! I'm Lime.\"");
+        System.out.println("    I've squeezed some space for your tasks today. What can I do?");
         showLine();
     }
 
@@ -42,7 +42,7 @@ public class Ui {
      * Displays the goodbye message.
      */
     public void showBye() {
-        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    Stay fresh! Hope to see you again soon!");
     }
 
     /**
@@ -75,9 +75,9 @@ public class Ui {
      * @param size current number of tasks
      */
     public void printTaskAdded(Task task, int size) {
-        System.out.println("    Got it. I've added this task:");
+        System.out.println("    Got it. I've squeezed this task:");
         System.out.println("    " + task);
-        System.out.println("    Now you have " + size + " tasks in the list.");
+        System.out.println("    Now you have " + size + " tasks in the bucket.");
     }
 
     /**
@@ -89,7 +89,7 @@ public class Ui {
     public void printTaskDeleted(Task task, int size) {
         System.out.println("    Noted. I've removed this task:");
         System.out.println("    " + task);
-        System.out.println("    Now you have " + size + " tasks in the list.");
+        System.out.println("    Now you have " + size + " tasks in the bucket.");
     }
 
     /**
@@ -106,7 +106,7 @@ public class Ui {
         }
 
         System.out.println(HORIZONTAL_LINE);
-        System.out.println("    Here are the matching tasks in your list:");
+        System.out.println("    Here are the matching tasks in your bucket:");
 
         for (int i = 0; i < foundTasks.size(); i++) {
             System.out.println("    " + (i + 1) + "." + foundTasks.get(i));
