@@ -10,7 +10,7 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 
 ---
 
-### Here are what 🤖Lime🍋 stands out:
+### Here are what 🤖Lime🍋 stands out
 
 - Easy commands
 - Clear user interface
