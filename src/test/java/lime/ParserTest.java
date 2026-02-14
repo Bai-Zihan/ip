@@ -1,13 +1,20 @@
 package lime;
 
-import lime.parser.Parser;
 import org.junit.jupiter.api.Test;
+
+import lime.parser.Parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Unit tests for the parser.
+ */
 public class ParserTest {
 
+    /**
+     * Verifies a missing todo description triggers an error.
+     */
     @Test
     public void parse_emptyTodoDescription_exceptionThrown() {
         try {
@@ -20,6 +27,9 @@ public class ParserTest {
         }
     }
 
+    /**
+     * Verifies an invalid command triggers an error.
+     */
     @Test
     public void parse_invalidCommand_exceptionThrown() {
         try {

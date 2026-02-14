@@ -5,13 +5,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
 
 
+/**
+ * JavaFX application that wires the UI to the Lime chatbot.
+ */
 public class Main extends Application {
 
     private Lime lime = new Lime("data/tasks.txt");
@@ -24,27 +27,46 @@ public class Main extends Application {
     private Image user = new Image("https://cdn-icons-png.flaticon.com/512/149/149071.png");
     private Image limeImage = new Image("https://cdn-icons-png.flaticon.com/512/4712/4712035.png");
 
+    /**
+     * Starts the JavaFX UI.
+     *
+     * @param stage primary stage
+     */
     @Override
     public void start(Stage stage) {
+        initializeComponents();
+        AnchorPane mainLayout = buildLayout();
+        configureStage(stage, mainLayout);
+        configureLayout(mainLayout);
+        registerHandlers();
+    }
+
+    private void initializeComponents() {
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
 
         userInput = new TextField();
         sendButton = new Button("Send");
+    }
 
+    private AnchorPane buildLayout() {
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
+        return mainLayout;
+    }
 
+    private void configureStage(Stage stage, AnchorPane mainLayout) {
         scene = new Scene(mainLayout);
-
         stage.setScene(scene);
-        stage.show();
         stage.setTitle("Lime Chatbot");
         stage.setResizable(false);
         stage.setMinHeight(600.0);
         stage.setMinWidth(400.0);
+        stage.show();
+    }
 
+    private void configureLayout(AnchorPane mainLayout) {
         mainLayout.setPrefSize(400.0, 600.0);
         scrollPane.setPrefSize(385, 535);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -60,15 +82,19 @@ public class Main extends Application {
         AnchorPane.setTopAnchor(scrollPane, 1.0);
         AnchorPane.setBottomAnchor(sendButton, 1.0);
         AnchorPane.setRightAnchor(sendButton, 1.0);
-        AnchorPane.setLeftAnchor(userInput , 1.0);
+        AnchorPane.setLeftAnchor(userInput, 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
+    }
 
+    private void registerHandlers() {
         sendButton.setOnMouseClicked((event) -> handleUserInput());
         userInput.setOnAction((event) -> handleUserInput());
-
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
     }
 
+    /**
+     * Sends the user input to the chatbot and renders responses.
+     */
     private void handleUserInput() {
         String input = userInput.getText();
         String response = lime.getResponse(input);

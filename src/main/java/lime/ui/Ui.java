@@ -1,25 +1,36 @@
 package lime.ui;
 
-import lime.task.Task;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Prints out the greeting and standard responds for each command
+import lime.task.Task;
+
+/**
+ * Handles user-facing messages for the CLI interface.
+ */
 public class Ui {
     private final Scanner sc;
     private static final String HORIZONTAL_LINE = "    ____________________________________________________________";
 
+    /**
+     * Constructs a UI backed by standard input/output.
+     */
     public Ui() {
         this.sc = new Scanner(System.in);
     }
 
-    //Reads the user command
+    /**
+     * Reads a command from standard input.
+     *
+     * @return raw user input
+     */
     public String readCommand() {
         return sc.nextLine();
     }
 
-    //Greeting
+    /**
+     * Displays the welcome greeting.
+     */
     public void showWelcome() {
         showLine();
         System.out.println("    Hello! I'm Lime");
@@ -27,59 +38,87 @@ public class Ui {
         showLine();
     }
 
-    //Ends the Chatbot
+    /**
+     * Displays the goodbye message.
+     */
     public void showBye() {
         System.out.println("    Bye. Hope to see you again soon!");
         showLine();
     }
 
-    //Prints the segmentation line
+    /**
+     * Prints a horizontal separator line.
+     */
     public void showLine() {
         System.out.println(HORIZONTAL_LINE);
     }
 
-    //Prints the error messages
+    /**
+     * Prints an error message.
+     *
+     * @param message message to display
+     */
     public void showError(String message) {
         System.out.println("    " + message);
     }
 
-    //Prints the error message regarding loading history tasks
+    /**
+     * Prints an error message when loading tasks fails.
+     */
     public void showLoadingError() {
         System.out.println("    Error loading file. Starting with an empty list.");
     }
 
-    //Prints response for a successful task adding
+    /**
+     * Prints the response after a task is added.
+     *
+     * @param task task added
+     * @param size current number of tasks
+     */
     public void printTaskAdded(Task task, int size) {
         System.out.println("    Got it. I've added this task:");
         System.out.println("    " + task);
         System.out.println("    Now you have " + size + " tasks in the list.");
     }
 
-    //Prints response for a successful task deletion
+    /**
+     * Prints the response after a task is deleted.
+     *
+     * @param task task deleted
+     * @param size current number of tasks
+     */
     public void printTaskDeleted(Task task, int size) {
         System.out.println("    Noted. I've removed this task:");
         System.out.println("    " + task);
         System.out.println("    Now you have " + size + " tasks in the list.");
     }
 
+    /**
+     * Displays tasks whose descriptions match a keyword.
+     *
+     * @param foundTasks matching tasks
+     */
     public void showFoundTasks(ArrayList<Task> foundTasks) {
         if (foundTasks.isEmpty()) {
             System.out.println(HORIZONTAL_LINE);
             System.out.println("    No matching tasks found.");
             System.out.println(HORIZONTAL_LINE);
-        } else {
-            System.out.println(HORIZONTAL_LINE);
-            System.out.println("    Here are the matching tasks in your list:");
-
-            for (int i = 0; i < foundTasks.size(); i++) {
-                System.out.println(" " + (i + 1) + "." + foundTasks.get(i));
-            }
-
-            System.out.println(HORIZONTAL_LINE);
+            return;
         }
+
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println("    Here are the matching tasks in your list:");
+
+        for (int i = 0; i < foundTasks.size(); i++) {
+            System.out.println("    " + (i + 1) + "." + foundTasks.get(i));
+        }
+
+        System.out.println(HORIZONTAL_LINE);
     }
 
-    //Prints response for a successful task sorting
+    /**
+     * Prints the response after tasks are sorted.
+     */
     public void showSortedMessage() {
         System.out.println(HORIZONTAL_LINE);
         System.out.println("    Got it! I've sorted your tasks alphabetically.");

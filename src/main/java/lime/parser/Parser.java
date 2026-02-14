@@ -1,19 +1,27 @@
 package lime.parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import lime.LimeException;
 import lime.command.*;
 import lime.task.Deadline;
 import lime.task.Event;
 import lime.task.Todo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
-
-//Decodes the user commands
+/**
+ * Parses raw user input into executable command objects.
+ */
 public class Parser {
 
-    //Chooses the correct command to execute or throws an exception for invalid commands
+    /**
+     * Chooses the correct command to execute or throws an exception for invalid commands.
+     *
+     * @param fullCommand raw user input
+     * @return command to execute
+     * @throws LimeException when the command is invalid or incomplete
+     */
     public static Command parse(String fullCommand) throws LimeException {
         String commandWord = fullCommand.split(" ")[0];
 
@@ -39,7 +47,13 @@ public class Parser {
         };
     }
 
-    //Handles the todo case command
+    /**
+     * Parses a todo command.
+     *
+     * @param fullCommand raw user input
+     * @return add command for a todo task
+     * @throws LimeException when the todo description is missing or malformed
+     */
     private static Command prepareTodo(String fullCommand) throws LimeException {
         if (fullCommand.length() <= 4) {
             throw new LimeException("OOPS!!! The description of a todo cannot be empty.");
@@ -56,7 +70,13 @@ public class Parser {
         return new AddCommand(new Todo(description));
     }
 
-    //Handles the deadline case command
+    /**
+     * Parses a deadline command.
+     *
+     * @param fullCommand raw user input
+     * @return add command for a deadline task
+     * @throws LimeException when the deadline description or time is missing or malformed
+     */
     private static Command prepareDeadline(String fullCommand) throws LimeException {
         int byIndex = getByIndex(fullCommand);
 
@@ -76,7 +96,13 @@ public class Parser {
         return new AddCommand(new Deadline(description, by));
     }
 
-    //Handles the event case command
+    /**
+     * Parses an event command.
+     *
+     * @param fullCommand raw user input
+     * @return add command for an event task
+     * @throws LimeException when the event fields are missing or malformed
+     */
     private static Command prepareEvent(String fullCommand) throws LimeException {
         int fromIndex = fullCommand.indexOf("/from");
         int toIndex = getToIndex(fullCommand, fromIndex);
@@ -105,7 +131,13 @@ public class Parser {
         return new AddCommand(new Event(description, from, to));
     }
 
-    //Handles the find case command
+    /**
+     * Parses a find command.
+     *
+     * @param fullCommand raw user input
+     * @return find command for the keyword
+     * @throws LimeException when the keyword is missing or malformed
+     */
     private static Command prepareFind(String fullCommand) throws LimeException {
         if (fullCommand.length() <= 4) {
             throw new LimeException("OOPS!!! The keyword to find cannot be empty.");
@@ -123,9 +155,15 @@ public class Parser {
         return new FindCommand(keyword);
     }
 
-    //Handles the on case command
+    /**
+     * Parses an on command for a specific date.
+     *
+     * @param fullCommand raw user input
+     * @return on command for the date
+     * @throws LimeException when the date is missing or invalid
+     */
     private static Command prepareOn(String fullCommand) throws LimeException {
-        String dateString = fullCommand.substring(2).trim(); // "on " 后面开始截取
+        String dateString = fullCommand.substring(2).trim(); // remove leading "on "
         if (dateString.isEmpty()) throw new LimeException("OOPS!!! Please provide a date.");
 
         try {
@@ -135,7 +173,14 @@ public class Parser {
         }
     }
 
-    //Gets the to index for event tasks
+    /**
+     * Gets the index of the "/to" segment in an event command.
+     *
+     * @param fullCommand raw user input
+     * @param fromIndex index of the "/from" segment
+     * @return index of the "/to" segment
+     * @throws LimeException when the event segments are missing or misordered
+     */
     private static int getToIndex(String fullCommand, int fromIndex) throws LimeException {
         int toIndex = fullCommand.indexOf("/to");
 
@@ -163,7 +208,14 @@ public class Parser {
         }
         return toIndex;
     }
-    //Gets the by index for deadline tasks
+
+    /**
+     * Gets the index of the "/by" segment in a deadline command.
+     *
+     * @param fullCommand raw user input
+     * @return index of the "/by" segment
+     * @throws LimeException when the deadline segment is missing or malformed
+     */
     private static int getByIndex(String fullCommand) throws LimeException {
         int byIndex = fullCommand.indexOf("/by");
         if (byIndex == -1) {
@@ -185,7 +237,13 @@ public class Parser {
         return byIndex;
     }
 
-    //Locates the task to execute for some index specific commands
+    /**
+     * Locates the task index for index-specific commands.
+     *
+     * @param command raw user input
+     * @return zero-based task index
+     * @throws LimeException when the index is missing or not a number
+     */
     private static int parseIndex(String command) throws LimeException {
         String[] parts = command.split(" ");
         if (parts.length < 2) {
