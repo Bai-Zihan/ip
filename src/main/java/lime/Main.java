@@ -1,19 +1,25 @@
 package lime;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 
 /**
- * JavaFX application that wires the UI to the Lime chatbot.
+ * JavaFX application that wires the UI to the Lime chatbot logic.
+ * Features a custom green title bar and a polished chat interface.
  */
 public class Main extends Application {
 
@@ -22,68 +28,165 @@ public class Main extends Application {
     private VBox dialogContainer;
     private TextField userInput;
     private Button sendButton;
-    private Scene scene;
 
-    private Image user = new Image("https://cdn-icons-png.flaticon.com/512/149/149071.png");
-    private Image limeImage = new Image("https://cdn-icons-png.flaticon.com/512/4712/4712035.png");
+    private final Image userImage = new Image(getClass().getResourceAsStream("/images/user.png"));
+    private final Image limeImage = new Image(getClass().getResourceAsStream("/images/lime.png"));
 
-    /**
-     * Starts the JavaFX UI.
-     *
-     * @param stage primary stage
-     */
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     @Override
     public void start(Stage stage) {
         initializeComponents();
-        AnchorPane mainLayout = buildLayout();
-        configureStage(stage, mainLayout);
-        configureLayout(mainLayout);
+
+        HBox customTitleBar = createCustomTitleBar(stage);
+        AnchorPane contentPane = buildContentPane();
+
+        VBox rootLayout = new VBox(customTitleBar, contentPane);
+        VBox.setVgrow(contentPane, Priority.ALWAYS);
+
+        configureStage(stage, rootLayout);
+        configureLayout(rootLayout, contentPane);
         registerHandlers();
+
+        // Initial welcome message
+        String welcomeMessage = "Hello! I'm Lime\nWhat can I do for you?";
+        dialogContainer.getChildren().add(
+                DialogBox.getLimeDialog(welcomeMessage, limeImage)
+        );
     }
 
+    /**
+     * Initializes UI components. (Fixed duplicate definition error)
+     */
     private void initializeComponents() {
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
-
         userInput = new TextField();
         sendButton = new Button("Send");
     }
 
-    private AnchorPane buildLayout() {
-        AnchorPane mainLayout = new AnchorPane();
-        mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
-        return mainLayout;
+    private HBox createCustomTitleBar(Stage stage) {
+        HBox titleBar = new HBox();
+        titleBar.setStyle("-fx-background-color: #4F7942; -fx-padding: 10px; -fx-alignment: center-left;");
+
+        javafx.scene.image.ImageView appIcon = new javafx.scene.image.ImageView(limeImage);
+        double iconSize = 28.0;
+        appIcon.setFitHeight(iconSize);
+        appIcon.setFitWidth(iconSize);
+        appIcon.setPreserveRatio(true);
+
+        double w = limeImage.getWidth();
+        double h = limeImage.getHeight();
+        double side = Math.min(w, h) * 0.6;
+        appIcon.setViewport(new javafx.geometry.Rectangle2D((w - side) / 2, (h - side) / 2, side, side));
+
+        javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(iconSize / 2, iconSize / 2, iconSize / 2);
+        appIcon.setClip(clip);
+
+        javafx.scene.control.Label titleLabel = new javafx.scene.control.Label("Lime");
+        titleLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 0 0 0 10;");
+
+        HBox branding = new HBox(appIcon, titleLabel);
+        branding.setAlignment(Pos.CENTER_LEFT);
+
+        javafx.scene.control.Label minimizeButton = new javafx.scene.control.Label("  -  ");
+        minimizeButton.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-cursor: hand;");
+        minimizeButton.setOnMouseClicked(event -> stage.setIconified(true));
+
+        javafx.scene.control.Label closeButton = new javafx.scene.control.Label("  x  ");
+        closeButton.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-cursor: hand;");
+        closeButton.setOnMouseClicked(event -> stage.close());
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        titleBar.getChildren().addAll(branding, spacer, new HBox(minimizeButton, closeButton));
+
+        titleBar.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        titleBar.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+
+        return titleBar;
     }
 
-    private void configureStage(Stage stage, AnchorPane mainLayout) {
-        scene = new Scene(mainLayout);
+    private AnchorPane buildContentPane() {
+        AnchorPane contentPane = new AnchorPane();
+        contentPane.getChildren().addAll(scrollPane, userInput, sendButton);
+        return contentPane;
+    }
+
+    private void configureStage(Stage stage, VBox rootLayout) {
+        stage.initStyle(StageStyle.TRANSPARENT);
+        Scene scene = new Scene(rootLayout, 400, 600);
+        scene.setFill(Color.TRANSPARENT);
+
+        java.net.URL cssResource = getClass().getResource("/style.css");
+        if (cssResource != null) {
+            scene.getStylesheets().add(cssResource.toExternalForm());
+        }
+
         stage.setScene(scene);
-        stage.setTitle("Lime Chatbot");
         stage.setResizable(false);
-        stage.setMinHeight(600.0);
-        stage.setMinWidth(400.0);
         stage.show();
     }
 
-    private void configureLayout(AnchorPane mainLayout) {
-        mainLayout.setPrefSize(400.0, 600.0);
-        scrollPane.setPrefSize(385, 535);
+    /**
+     * Polishes the GUI layout to match the LeadBot style.
+     */
+    private void configureLayout(VBox rootLayout, AnchorPane contentPane) {
+        rootLayout.setStyle("-fx-background-color: white; -fx-border-color: #4F7942; "
+                + "-fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;");
+
+        scrollPane.setPrefSize(385, 500);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setVvalue(1.0);
         scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: white; -fx-border-color: transparent;");
+
         dialogContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
         dialogContainer.setSpacing(15);
-        dialogContainer.setStyle("-fx-background-color: #ffffff; -fx-padding: 15;");
-        userInput.setPrefWidth(325.0);
-        sendButton.setPrefWidth(55.0);
+        dialogContainer.setPadding(new Insets(15));
+        dialogContainer.setStyle("-fx-background-color: #ffffff;");
 
-        AnchorPane.setTopAnchor(scrollPane, 1.0);
-        AnchorPane.setBottomAnchor(sendButton, 1.0);
-        AnchorPane.setRightAnchor(sendButton, 1.0);
-        AnchorPane.setLeftAnchor(userInput, 1.0);
-        AnchorPane.setBottomAnchor(userInput, 1.0);
+        userInput.setPrefWidth(285.0);
+        userInput.setPrefHeight(40.0);
+        userInput.setPromptText("Reply to Lime...");
+        userInput.setStyle("-fx-background-color: #f4f4f7; "
+                + "-fx-background-radius: 20px; "
+                + "-fx-border-color: #e0e0e0; "
+                + "-fx-border-radius: 20px; "
+                + "-fx-padding: 0 15 0 15; "
+                + "-fx-font-size: 14px;");
+
+        sendButton.setPrefWidth(70.0);
+        sendButton.setPrefHeight(40.0);
+        sendButton.setStyle("-fx-background-color: #4F7942; "
+                + "-fx-text-fill: white; "
+                + "-fx-font-weight: bold; "
+                + "-fx-background-radius: 20px; "
+                + "-fx-font-size: 14px; "
+                + "-fx-cursor: hand;");
+
+        AnchorPane.setTopAnchor(scrollPane, 0.0);
+        AnchorPane.setLeftAnchor(scrollPane, 0.0);
+        AnchorPane.setRightAnchor(scrollPane, 0.0);
+        AnchorPane.setBottomAnchor(scrollPane, 65.0);
+
+        contentPane.setStyle("-fx-border-color: #eeeeee transparent transparent transparent; -fx-border-width: 1;");
+
+        AnchorPane.setBottomAnchor(userInput, 12.0);
+        AnchorPane.setLeftAnchor(userInput, 12.0);
+
+        AnchorPane.setBottomAnchor(sendButton, 12.0);
+        AnchorPane.setRightAnchor(sendButton, 12.0);
     }
 
     private void registerHandlers() {
@@ -92,15 +195,15 @@ public class Main extends Application {
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
     }
 
-    /**
-     * Sends the user input to the chatbot and renders responses.
-     */
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = lime.getResponse(input);
+        if (input.trim().isEmpty()) {
+            return;
+        }
 
+        String response = lime.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, user),
+                DialogBox.getUserDialog(input, userImage),
                 DialogBox.getLimeDialog(response, limeImage)
         );
         userInput.clear();
