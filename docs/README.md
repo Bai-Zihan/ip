@@ -1,30 +1,24 @@
-# Lime User Guide
+# 🍋🤖 Lime - Your Zesty Task Assistant
 
-// Update the title above to match the actual product name
+Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more productivity out of your day.
 
-// Product screenshot goes here
+---
 
-// Product intro goes here
+## 🚀 Features
 
-## Adding deadlines
+### 1. Add Tasks with a Zest
+* **Todo**: `todo [description]` - Adds a task to the pulp.
+* **Deadline**: `deadline [description] /by [YYYY-MM-DD]` - Sets a expiration date for your juice.
+* **Event**: `event [description] /from [time] /to [time]` - Schedules a fresh event.
 
-// Describe the action and its outcome.
+### 2. View the Pulp
+* **List**: `list` - Shows all tasks currently in your bucket.
 
-// Give examples of usage
+### 3. Squeeze Out Tasks
+* **Mark**: `mark [index]` - Marks a task as deliciously done.
+* **Delete**: `delete [index]` - Removes a task from the pulp-free list.
 
-Example: `keyword (optional arguments)`
+---
 
-// A description of the expected outcome goes here
-
-```
-expected output
-```
-
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+## 🛠 Usage
+Enter your commands in the text box at the bottom and click **Send** or press **Enter**. Lime will respond with its signature zesty personality!
