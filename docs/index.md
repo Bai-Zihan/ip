@@ -65,8 +65,10 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 
 ---
 
-## 💻 Code Example
+### 💻 Code Example
+
 Here is a snippet of the `main` method:
+
 ```java
 public static void main(String[] args) {
     new Lime("data/tasks.txt").run();
