@@ -1,6 +1,7 @@
 package lime;
 
 import javafx.application.Application;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 /**
  * JavaFX application that wires the UI to the Lime chatbot logic.
@@ -158,7 +160,9 @@ public class Main extends Application {
 
         userInput.setPrefWidth(285.0);
         userInput.setPrefHeight(40.0);
-        userInput.setPromptText("Reply to Lime...");
+
+        userInput.setPromptText("Ask Lime to manage your agenda...");
+
         userInput.setStyle("-fx-background-color: #f4f4f7; "
                 + "-fx-background-radius: 20px; "
                 + "-fx-border-color: #e0e0e0; "
@@ -187,6 +191,8 @@ public class Main extends Application {
 
         AnchorPane.setBottomAnchor(sendButton, 12.0);
         AnchorPane.setRightAnchor(sendButton, 12.0);
+
+        rootLayout.requestFocus();
     }
 
     private void registerHandlers() {
@@ -207,5 +213,11 @@ public class Main extends Application {
                 DialogBox.getLimeDialog(response, limeImage)
         );
         userInput.clear();
+
+        if (input.trim().equalsIgnoreCase("bye")) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+            delay.setOnFinished(event -> javafx.application.Platform.exit());
+            delay.play();
+        }
     }
 }
