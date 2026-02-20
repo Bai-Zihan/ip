@@ -43,8 +43,11 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 
 ### 1. Add Tasks with a Zest
 * **Todo**: `todo [description]` - Adds a task to the pulp.
-* **Deadline**: `deadline [description] /by [YYYY-MM-DD]` - Sets a expiration date for your juice.
-* **Event**: `event [description] /from [time] /to [time]` - Schedules a fresh event.
+  *  e.g. todo read a book
+* **Deadline**: `deadline [description] /by [YYYY-MM-DD]` - Sets an expiration date for your juice.
+  * e.g. deadline submit ip /by 2026-02-20
+* **Event**: `event [description] /from [YYYY-MM-DD] /to [YYYY-MM-DD]` - Schedules a fresh event.
+  * e.g. event team meeting /from 2026-01-01 /to 2026-01-01
 
 > **💡 Reminder**: Use the `YYYY-MM-DD` format for Deadlines so Lime can sort them perfectly!
 
@@ -53,13 +56,37 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 * **Sort**: `sort` - Sort all tasks by their ending dates.
 
 ### 3. View the Tasks
-* **Find**: `find [keyword]` - Find a task contains a specific keyword.
-*  **On**: `on [index]` - Find a task to be done at a specific time
+* **Find**: `find [keyword]` - Find all tasks contains a specific keyword.
+  * e.g. find read a (returns the todo task or other tasks with "read")
+*  **On**: `on [YYYY-MM-DD]` - Find all tasks to be done at a specific time
+  * e.g. on 2026-02-20 (returns the ip deadline task)
 
 ### 4. Squeeze Out Tasks
 * **Mark**: `mark [index]` - Marks a task as deliciously done.
+  * e.g. mark 1 (marks the todo task)
 * **UnMark**: `unmark [index]` -Marks a task as undone.
+  * e.g. unmark 1 (unmarks the todo task)
 * **Delete**: `delete [index]` - Removes a task from the pulp-free list.
+  * e.g. delete 2 (deletes the ip deadline task)
+
+### 5. Say bye to Lime
+* **Bye**: `bye` - Leaves Lime to grow juicier.
+
+---
+
+## 📜 Command Summary
+
+| Action                           | Format                                                    |
+|----------------------------------|-----------------------------------------------------------|
+| Add Todo                         | `todo [description]`                                      |
+| Add Deadline                     | `deadline [description] /by [YYYY-MM-DD]`                 |
+| Add Event                        | `event [description] /from [YYYY-MM-DD] /to [YYYY-MM-DD]` |
+| Show all Tasks                   | `list`                                                    |
+| Sort all Tasks                   | `sort`                                                    |
+| Find specific tasks by name/date | `find [keyword]`/`on [YYYY-MM-DD]`                        |
+| Mark/Unmark	                     | `mark [index]`/`unmark [index]`                           |
+| Delete                           | `delete [index]`                                          |
+| Exit                             | `bye`                                                     |
 
 ---
 
