@@ -28,42 +28,69 @@ public class DialogBox extends HBox {
         text = new Label(l);
         displayPicture = new ImageView(iv);
 
+        initializeText();
+        initializeImage(iv);
+        configureLayout();
+    }
+
+    private void initializeText() {
         text.setWrapText(true);
         text.setMinHeight(35);
+    }
 
+    /**
+     * Configures the avatar image view and applies a circular clip.
+     *
+     * @param image avatar image to render
+     */
+    private void initializeImage(Image image) {
         double imageSize = 45.0;
         displayPicture.setFitWidth(imageSize);
         displayPicture.setFitHeight(imageSize);
         displayPicture.setPreserveRatio(true);
         displayPicture.setSmooth(true);
+        applyImageViewport(image);
+        Circle clip = new Circle(imageSize / 2, imageSize / 2, imageSize / 2);
+        displayPicture.setClip(clip);
+    }
 
-        double width = iv.getWidth();
-        double height = iv.getHeight();
+    /**
+     * Centers and crops the image to keep the avatar framing consistent.
+     *
+     * @param image source image for the viewport
+     */
+    private void applyImageViewport(Image image) {
+        double width = image.getWidth();
+        double height = image.getHeight();
         double minSide = Math.min(width, height);
         double zoomFactor = 0.6;
-
         displayPicture.setViewport(new javafx.geometry.Rectangle2D(
                 (width - minSide * zoomFactor) / 2,
                 (height - minSide * zoomFactor) / 2,
                 minSide * zoomFactor,
                 minSide * zoomFactor
         ));
+    }
 
-        Circle clip = new Circle(imageSize / 2, imageSize / 2, imageSize / 2);
-        displayPicture.setClip(clip);
-
+    /**
+     * Sets bubble alignment and spacing for the dialog row.
+     */
+    private void configureLayout() {
         setAlignment(Pos.CENTER_RIGHT);
         setSpacing(12);
         setPadding(new Insets(10, 15, 10, 15));
         getChildren().addAll(text, displayPicture);
     }
 
-        private void flip() {
-            setAlignment(Pos.CENTER_LEFT);
-            ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
-            FXCollections.reverse(tmp);
-            getChildren().setAll(tmp);
-        }
+    /**
+     * Flips the dialog direction to align the avatar on the left.
+     */
+    private void flip() {
+        setAlignment(Pos.CENTER_LEFT);
+        ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
+        FXCollections.reverse(tmp);
+        getChildren().setAll(tmp);
+    }
 
     /**
      * Creates a dialog box styled for user messages.
@@ -77,6 +104,7 @@ public class DialogBox extends HBox {
         applyBubbleStyle(db, "#4F7942", "white", "18px 5px 18px 18px");
         return db;
     }
+
     /**
      * Creates a dialog box styled for Lime's messages.
      *
