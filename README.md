@@ -17,7 +17,7 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 ---
 
 ## 🎨 UI Preview
-![Lime UI Preview](Ui.png)
+![Lime UI Preview](https://github.com/Bai-Zihan/ip/docs/Ui.png)
 
 ---
 
