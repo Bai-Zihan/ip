@@ -1,26 +1,74 @@
-# Lime project template
+# 🤖Lime🍋 - Your Zesty Task Assistant
+> _"Lime is the best!"_ -- Myself
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more productivity out of your day by recording and tracking your tasks.
 
-## Setting up in Intellij
+---
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## 📍 Table of Contents
+* [🎨 UI Preview](#-ui-preview)
+* [🚀 Deployment](#-deployment)
+* [📖 Command Guide](#-command-guide)
+    * [1. Add Tasks](#1-add-tasks-with-a-zest)
+    * [2. Manage Pulp](#2-view-the-pulp)
+    * [3. Search & View](#3-view-the-tasks)
+    * [4. Squeeze Out Tasks](#4-squeeze-out-tasks)
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Lime.java` file, right-click it, and choose `Run Lime.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+---
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+## 🎨 UI Preview
+![Lime UI Preview](Ui.png)
+
+---
+
+### Here are what 🤖Lime🍋 stands out
+
+- Easy commands
+- Clear user interface
+- No monetary cost
+
+---
+
+## 🚀 Deployment
+1. **Download**: Get the latest `Lime.jar` from [Releases](https://github.com/Bai-Zihan/ip/releases).
+2. **Run**: Ensure you have **Java 17**, then run:
+   `java -jar Lime.jar`
+3. **Enjoy**: Give your work to **Lime!**
+
+> **💡 Reminder**: Lime automatically creates a `data/tasks.txt` file in your directory to keep your tasks fresh even after a restart!
+
+---
+
+## 📖 Command Guide
+
+### 1. Add Tasks with a Zest
+* **Todo**: `todo [description]` - Adds a task to the pulp.
+* **Deadline**: `deadline [description] /by [YYYY-MM-DD]` - Sets a expiration date for your juice.
+* **Event**: `event [description] /from [time] /to [time]` - Schedules a fresh event.
+
+> **💡 Reminder**: Use the `YYYY-MM-DD` format for Deadlines so Lime can sort them perfectly!
+
+### 2. View the Pulp
+* **List**: `list` - Shows all tasks currently in your bucket.
+* **Sort**: `sort` - Sort all tasks by their ending dates.
+
+### 3. View the Tasks
+* **Find**: `find [keyword]` - Find a task contains a specific keyword.
+*  **On**: `on [index]` - Find a task to be done at a specific time
+
+### 4. Squeeze Out Tasks
+* **Mark**: `mark [index]` - Marks a task as deliciously done.
+* **UnMark**: `unmark [index]` -Marks a task as undone.
+* **Delete**: `delete [index]` - Removes a task from the pulp-free list.
+
+---
+
+### 💻 Code Example
+
+Here is a snippet of the `main` method:
+
+```java
+public static void main(String[] args) {
+    new Lime("data/tasks.txt").run();
+}
+```
