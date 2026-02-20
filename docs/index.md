@@ -16,8 +16,6 @@ Refreshing to see you! Lime is a desktop chatbot that helps you squeeze more pro
 
 ---
 
----
-
 ## 🎨 UI Preview
 ![Lime UI Preview](ui.png)
 
@@ -73,3 +71,4 @@ Here is a snippet of the `main` method:
 public static void main(String[] args) {
     new Lime("data/tasks.txt").run();
 }
+```
