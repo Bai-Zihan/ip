@@ -19,16 +19,20 @@ dependencies {
 
     String javaFxVersion = "17.0.7"
     runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:win"
-    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:mac"
     runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:linux"
 
+    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:mac-aarch64"
+
     runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:win"
-    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:mac"
     runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:linux"
+    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:mac-aarch64"
 
     runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:win"
-    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:mac"
     runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:linux"
+    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:mac-aarch64"
 }
 
 test {
