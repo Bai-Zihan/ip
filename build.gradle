@@ -13,8 +13,22 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
     implementation 'org.openjfx:javafx-controls:17.0.7'
     implementation 'org.openjfx:javafx-fxml:17.0.7'
+
+    String javaFxVersion = "17.0.7"
+    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:win"
+    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-graphics:$javaFxVersion:linux"
+
+    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:win"
+    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-controls:$javaFxVersion:linux"
+
+    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:win"
+    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:mac"
+    runtimeOnly "org.openjfx:javafx-base:$javaFxVersion:linux"
 }
 
 test {
